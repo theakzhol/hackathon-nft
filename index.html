@@ -29,6 +29,7 @@
         </div>
       </nav>
       <!-- navbar end -->
+
       <!-- modal start -->
       <div class="modal">
         <div class="title">
@@ -42,94 +43,38 @@
         </div>
         <div class="btns">
           <button class="btn-create">Create</button>
+          <button class="btn-save">Save</button>
           <button class="btn-cancel">Cancel</button>
         </div>
       </div>
-      <!-- modal end -->
-
-      <!-- main content start -->
-      <div class="main-content">
-        <!-- <button class="btn-modalAdd">CREATE</button> -->
-      </div>
+    </div>
+    <!-- modal end -->
 
     <!-- main content start -->
-    <div class="slider">
-      <ul>
-        <li>
-          <video src="./css/img/IMG_0959.MP4" controls>
-            <p>
-              Ваш браузер не поддерживает HTML5 видео. Используйте
-              <a href="rabbit320.webm">ссылку на видео</a> для доступа.
-            </p>
-          </video>
-        </li>
-        <li><img src="i/2.jpg" alt="" /></li>
-        <li><img src="i/3.jpg" alt="" /></li>
-        <li><img src="i/4.jpg" alt="" /></li>
-        <li><img src="i/5.jpg" alt="" /></li>
-      </ul>
-    </div>
+    <div class="main-content"></div>
+    <!-- main content end -->
+
     <!-- footer start-->
-    <div class="container">
-      <div class="footer">
-        <div class="social">
-          <p>Join the community</p>
-          <img
-            src="./css/img/facebook.svg"
-            alt="facebook"
-            class="social-icons"
-          />
-          <img src="./css/img/instagram.svg" alt="inst" class="social-icons" />
-          <img src="./css/img//telegram.svg" alt="tg" class="social-icons" />
-          <img src="./css/img/twitter.svg" alt="twitter" class="social-icons" />
-          <img src="./css/img/youtube.svg" alt="yuotube" class="social-icons" />
-        </div>
-        <div class="history">
-          The world’s first and largest digital marketplace for crypto
-          collectibles and non-fungible tokens (NFTs). Buy, sell, and discover
-          exclusive digital items. Marketplace All NFTs Art Gaming Memberships
-
-          PFPs Photography My Accountls
-        </div>
-        <div class="info">© 2018 - 2023 Ozone Networks, Inc</div>
+    <footer>
+      <div class="social">
+        <p>Join the community</p>
+        <img src="./css/img/facebook.svg" alt="facebook" class="social-icons" />
+        <img src="./css/img/instagram.svg" alt="inst" class="social-icons" />
+        <img src="./css/img//telegram.svg" alt="tg" class="social-icons" />
+        <img src="./css/img/twitter.svg" alt="twitter" class="social-icons" />
+        <img src="./css/img/youtube.svg" alt="yuotube" class="social-icons" />
       </div>
-    </div>
+      <div class="history">
+        The world’s first and largest digital marketplace for crypto
+        collectibles and non-fungible tokens (NFTs). Buy, sell, and discover
+        exclusive digital items. Marketplace All NFTs Art Gaming Memberships
+        PFPs Photography My Accountls
+      </div>
+      <div class="info">© 2018 - 2023 Ozone Networks, Inc</div>
+    </footer>
     <!-- footer end-->
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $(".slider").each(function () {
-          // обрабатываем каждый слайдер
-          var obj = $(this);
-          $(obj).append("<div class='nav'></div>");
-          $(obj)
-            .find("li")
-            .each(function () {
-              $(obj)
-                .find(".nav")
-                .append("<span rel='" + $(this).index() + "'></span>"); // добавляем блок навигации
-              $(this).addClass("slider" + $(this).index());
-            });
-          $(obj).find("span").first().addClass("on"); // делаем активным первый элемент меню
-        });
-      });
-      function sliderJS(obj, sl) {
-        // slider function
-        var ul = $(sl).find("ul"); // находим блок
-        var bl = $(sl).find("li.slider" + obj); // находим любой из элементов блока
-        var step = $(bl).width(); // ширина объекта
-        $(ul).animate({ marginLeft: "-" + step * obj }, 500); // 500 это скорость перемотки
-      }
-      $(document).on("click", ".slider .nav span", function () {
-        // slider click navigate
-        var sl = $(this).closest(".slider"); // находим, в каком блоке был клик
-        $(sl).find("span").removeClass("on"); // убираем активный элемент
-        $(this).addClass("on"); // делаем активным текущий
-        var obj = $(this).attr("rel"); // узнаем его номер
-        sliderJS(obj, sl); // слайдим
-        return false;
-      });
-    </script>
 
+    <!-- JS -->
     <script src="./js/script.js"></script>
   </body>
 </html>
