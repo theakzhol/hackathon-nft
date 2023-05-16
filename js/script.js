@@ -2,6 +2,8 @@
 
 const API = "http://localhost:8000/product";
 
+let editer_id = 0;
+
 // ? pull out from html
 
 let btnModalAdd = document.querySelector(".btn-modalAdd");
@@ -13,6 +15,8 @@ let inpDescr = document.querySelector(".descr");
 let inpPrice = document.querySelector(".price");
 let inpImg = document.querySelector(".img");
 let btnCreate = document.querySelector(".btn-create");
+let body = document.querySelector("body");
+let btnSave = document.querySelector(".btn-save");
 
 // ? add event to buttons
 
@@ -68,18 +72,28 @@ async function addNft() {
 // ? --------------------------------- READ ----------------------
 
 async function read() {
-  await fetch(API)
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((element) => {
-        render.innerHTML += `<div class="cards">
-        <img src="${element.img}" alt="img error"/>
-          <h2>${element.name}</h2>
-          <p>${element.descr}</p>
-          <p>${element.price}$</p>
-        </div>`;
-      });
-    });
+  let cards = await fetch(`${API}`);
+  let res = await cards.json();
+
+  console.log(res);
+
+  render.innerHTML = "";
+
+  res.forEach((element) => {
+    render.innerHTML += `<div class="cards">
+    <div class="card-img">
+      <img src="${element.img}" alt="img error" class="card-img" style="width: 40%"/>
+    </div>
+    <div class="card-title">
+      <h2>${element.name}</h2>
+      <p>${element.descr}</p>
+      <p>${element.price}$</p>
+    </div>
+    <div class="card-btn"> 
+      <button onclick="updateNft(${element.id})" class="btn-edit">Edit</button>
+      <button onclick="deleteNft(${element.id})" class="btn-delete">Delete</button>
+    </div>`;
+  });
 }
 
 read();
@@ -172,3 +186,14 @@ exampleCarousel.setControls();
 // exampleCarousel.setNav();
 exampleCarousel.useControls();
 // slider end
+
+// ? ------------------------------------- DELETE -----------------
+
+async function deleteNft(id) {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE",
+  });
+  read();
+}
+
+// ? ------------------------------- UPTADE ---------------------
