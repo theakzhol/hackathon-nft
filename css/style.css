@@ -16,6 +16,7 @@ body {
 nav {
   width: 100%;
   margin-top: 2rem;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,15 +98,15 @@ nav {
   transition: 100ms;
 }
 
-.footer {
+footer {
   width: 100%;
   background-color: #df8b46;
   display: flex;
   flex-direction: column;
-  margin-top: 10rem;
+  margin-top: 5rem;
 }
 .social {
-  width: 70%;
+  width: 50%;
   text-align: center;
 
   padding: 1%;
@@ -136,6 +137,7 @@ nav {
   display: none;
   flex-direction: column;
   border-radius: 20px;
+  z-index: 9999;
 }
 
 .title {
@@ -217,10 +219,20 @@ nav {
   transition: 100ms;
 }
 
+.btn-save {
+  display: none;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
 .main-content {
   margin: 0 auto;
   width: 80%;
+  height: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -228,6 +240,63 @@ nav {
 
 .cards {
   background-color: #be5f1b;
-  width: 40%;
-  height: 100px;
+  margin: 0;
+  width: 30%;
+  height: 22.5em;
+  transition: 1s ease-in-out;
+  clip-path: polygon(
+    30px 0%,
+    100% 0,
+    100% calc(100% - 30px),
+    calc(100% - 30px) 100%,
+    0 100%,
+    0% 30px
+  );
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.card-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  gap: 10px;
+  /* height: 200px; */
+}
+
+.card-title > h2,
+p {
+  margin: 0;
+}
+
+.card-title > p {
+  text-align: center;
+  display: flex;
+  margin: 0 5px 0 5px;
+}
+
+.card-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.card-btn > button {
+  width: 30%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
 }
