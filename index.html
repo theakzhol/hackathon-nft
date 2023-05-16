@@ -49,33 +49,23 @@
       <div class="main-content">
         <!-- <button class="btn-modalAdd">CREATE</button> -->
       </div>
-      <!-- main content start -->
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad exercitationem
-      necessitatibus libero hic cum nostrum reprehenderit nemo rerum corporis
-      vel consectetur quaerat suscipit, velit iure, quae pariatur est aut dolor
-      tempora ratione nisi vero! Reiciendis libero officiis dicta veniam in
-      porro fugit aut repellendus quos similique deserunt ea eos repudiandae
-      dolorem ducimus blanditiis eum, fugiat nulla. Maxime enim libero repellat
-      ad odio fuga facere deserunt vel nulla qui, quisquam eius, repudiandae
-      illum iusto! Iusto vel, optio officia inventore saepe quidem repellendus
-      similique doloremque culpa asperiores velit nulla maiores obcaecati,
-      deserunt, est quam aliquam molestiae. Voluptatibus et eligendi reiciendis
-      vitae, nihil omnis aut quaerat voluptatum eos repudiandae qui suscipit
-      natus mollitia. Iure perspiciatis iusto quis soluta tempore veniam
-      incidunt debitis aspernatur accusamus aperiam, tempora sed magni,
-      provident adipisci quos quia, porro pariatur eum. Quod minus, odio omnis
-      ad soluta impedit voluptates incidunt molestiae eius magni tempore fugiat
-      nostrum inventore architecto tempora laborum consequuntur expedita placeat
-      maiores blanditiis non ex dolorem exercitationem odit. Labore quibusdam
-      accusantium nemo id deserunt iure velit repudiandae? Vel atque cumque,
-      unde nesciunt reprehenderit qui commodi quo obcaecati eum aliquam ab hic
-      autem debitis. Perspiciatis modi illum accusantium asperiores quibusdam
-      adipisci. Atque quibusdam in vero est cupiditate at nemo ex doloremque
-      nostrum recusandae nihil a tempore, eaque itaque accusantium minus ratione
-      quidem, ducimus assumenda! Laborum vitae quia maxime quos. Perferendis,
-      sapiente in consectetur maiores minima adipisci corrupti quas laborum
-      porro, omnis numquam, maxime veniam doloribus ipsam voluptates est amet!
-      Facilis rerum obcaecati ipsam minus neque dolorem error numquam. Quidem
+    </div>
+    <!-- main content start -->
+    <div class="slider">
+      <ul>
+        <li>
+          <video src="./css/img/IMG_0959.MP4" controls>
+            <p>
+              Ваш браузер не поддерживает HTML5 видео. Используйте
+              <a href="rabbit320.webm">ссылку на видео</a> для доступа.
+            </p>
+          </video>
+        </li>
+        <li><img src="i/2.jpg" alt="" /></li>
+        <li><img src="i/3.jpg" alt="" /></li>
+        <li><img src="i/4.jpg" alt="" /></li>
+        <li><img src="i/5.jpg" alt="" /></li>
+      </ul>
     </div>
     <!-- footer start-->
     <div class="container">
@@ -102,7 +92,40 @@
       </div>
     </div>
     <!-- footer end-->
-
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".slider").each(function () {
+          // обрабатываем каждый слайдер
+          var obj = $(this);
+          $(obj).append("<div class='nav'></div>");
+          $(obj)
+            .find("li")
+            .each(function () {
+              $(obj)
+                .find(".nav")
+                .append("<span rel='" + $(this).index() + "'></span>"); // добавляем блок навигации
+              $(this).addClass("slider" + $(this).index());
+            });
+          $(obj).find("span").first().addClass("on"); // делаем активным первый элемент меню
+        });
+      });
+      function sliderJS(obj, sl) {
+        // slider function
+        var ul = $(sl).find("ul"); // находим блок
+        var bl = $(sl).find("li.slider" + obj); // находим любой из элементов блока
+        var step = $(bl).width(); // ширина объекта
+        $(ul).animate({ marginLeft: "-" + step * obj }, 500); // 500 это скорость перемотки
+      }
+      $(document).on("click", ".slider .nav span", function () {
+        // slider click navigate
+        var sl = $(this).closest(".slider"); // находим, в каком блоке был клик
+        $(sl).find("span").removeClass("on"); // убираем активный элемент
+        $(this).addClass("on"); // делаем активным текущий
+        var obj = $(this).attr("rel"); // узнаем его номер
+        sliderJS(obj, sl); // слайдим
+        return false;
+      });
+    </script>
     <script src="./js/script.js"></script>
   </body>
 </html>
