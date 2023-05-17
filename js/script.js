@@ -23,11 +23,11 @@ let btnSearch = document.querySelector(".btn-search");
 let searchVal = "";
 
 // ? pagination
-// let currentPage = 1; // текущая страница
-// let pageTotalCount = 1; // общее кол-во страниц
-// let pageList = document.querySelector(".page-list");
-// let prev = document.querySelector(".btn-previous");
-// let next = document.querySelector(".btn-next");
+let currentPage = 1; // текущая страница
+let pageTotalCount = 1; // общее кол-во страниц
+let pageList = document.querySelector(".page-list");
+let prev = document.querySelector(".btn-previous");
+let next = document.querySelector(".btn-next");
 
 // ? add event to buttons
 
@@ -88,10 +88,14 @@ btnCreate.addEventListener("click", async function () {
 // ? --------------------------------------------------------------- READ ----------------------
 
 async function read() {
-  let cards = await fetch(`${API}?q=${searchVal}`);
+  let cards = await fetch(
+    `${API}?q=${searchVal}&_page=${currentPage}&_limit=6`
+  );
   let res = await cards.json();
 
   console.log(res);
+
+  drawPaginationButtons();
 
   render.innerHTML = "";
 
@@ -174,12 +178,63 @@ btnSave.addEventListener("click", async function () {
 
 // ? ------------------------ SEARCH
 
-btnSearch.addEventListener("click", () => {
+inpSearch.addEventListener("input", () => {
   searchVal = inpSearch.value;
   read();
 });
 
 read();
+
+// ? --------------------    PAGINATION
+function drawPaginationButtons() {
+  fetch(`${API}`)
+    .then((res) => res.json())
+    .then((data) => {
+      pageTotalCount = Math.ceil(data.length / 6);
+
+      pageList.innerHTML = "";
+
+      for (let i = 1; i <= pageTotalCount; i++) {
+        // создаем кнопки с цифрами
+        if (currentPage == i) {
+          let page1 = document.createElement("li");
+          page1.innerHTML = `<li class="page-item active"><a class="page-link page-number" href="#"
+          style="color: white; text-decoration: none; font-size: 20px;">${i}</a></li>`;
+          pageList.append(page1);
+        } else {
+          let page2 = document.createElement("li");
+          page2.innerHTML = `<li class="page-item"><a class="page-link page-number" href="#"
+          style="color: white; text-decoration: none; font-size: 20px;">${i}</a></li>`;
+          pageList.append(page2);
+        }
+      }
+    });
+}
+
+// кнопка переключения на предыдущую страницу
+prev.addEventListener("click", () => {
+  if (currentPage <= 1) {
+    return;
+  }
+  currentPage--;
+  read();
+});
+
+// кнопка переключения на следующую страницу
+next.addEventListener("click", () => {
+  if (currentPage >= pageTotalCount) {
+    return;
+  }
+  currentPage++;
+  read();
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("page-number")) {
+    currentPage = e.target.innerText;
+    read();
+  }
+});
 
 // ! ================================================================  slider start ==================================================
 const galleryContainer = document.querySelector(".gallery-container");
