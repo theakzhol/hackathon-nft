@@ -41,20 +41,6 @@
       "price": "555",
       "img": "https://i.pinimg.com/564x/93/3f/d3/933fd3242d05d10094bc88c6c751b2e2.jpg",
       "id": 6
-    },
-    {
-      "name": "1",
-      "descr": "1",
-      "price": "1",
-      "img": "1",
-      "id": 7
-    },
-    {
-      "name": "22",
-      "descr": "2",
-      "price": "2",
-      "img": "2",
-      "id": 8
     }
   ]
 }
