@@ -403,6 +403,18 @@ p {
   background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
 }
 
+.page-list {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+  gap: 10px;
+}
+
 /* ! ----------------------------------------------- slider start */
 .gallery {
   width: 100%;
