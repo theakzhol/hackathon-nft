@@ -5,10 +5,23 @@
 }
 
 body {
-  background-color: #070604;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./img/back.png"); /* Замените на свое изображение фона */
+  filter: blur(10px);
+  z-index: -1;
 }
 
 .container {
+  z-index: 999;
   width: 80%;
   height: 100%;
 }
@@ -51,7 +64,9 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 50px;
+  text-align: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .inp-search {
@@ -66,6 +81,24 @@ nav {
 
 .inp-search:focus {
   box-shadow: 0 0 0 0.25vw #df9065;
+}
+
+.btn-search {
+  margin: 0;
+  width: 7%;
+  height: 35px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #df8b46;
+  border: none;
+  border-radius: 50%;
+}
+
+.img-search {
+  margin: 0;
+  width: 60%;
 }
 
 .btn-modalAdd {
@@ -106,7 +139,7 @@ footer {
   margin-top: 5rem;
 }
 .social {
-  width: 50%;
+  width: 40%;
   text-align: center;
 
   padding: 1%;
@@ -128,9 +161,10 @@ footer {
 .modal {
   width: 45%;
   height: 60%;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  overflow: auto;
   transform: translate(-50%, -50%);
   color: white;
   background-color: #171717;
@@ -227,6 +261,14 @@ footer {
   justify-content: center;
 }
 
+.btn-create {
+  display: flex;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
 .main-content {
   margin: 0 auto;
   width: 80%;
@@ -235,14 +277,15 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 50px;
 }
 
 .cards {
   background-color: #be5f1b;
+  color: white;
   margin: 0;
   width: 30%;
-  height: 22.5em;
+  height: 30em;
   transition: 1s ease-in-out;
   clip-path: polygon(
     30px 0%,
@@ -268,12 +311,10 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* flex-wrap: wrap; */
   text-align: center;
   width: 100%;
   margin: 0;
   gap: 10px;
-  /* height: 200px; */
 }
 
 .card-title > h2,
@@ -289,18 +330,92 @@ p {
 
 .card-btn {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   gap: 10px;
   width: 100%;
 }
 
 .card-btn > button {
-  width: 30%;
+  width: 35%;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  margin: 0;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: #ffe53b;
+  background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
+}
+
+.block-filter {
+  width: 80%;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.filter {
+  width: 50%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filter > select {
+  margin: 0;
+  width: 20%;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+}
+
+.block-search {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.page-controls {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 5rem;
+}
+
+.page-controls > button {
+  margin: 0;
+  width: 15%;
   height: 30px;
   border-radius: 10px;
   border: none;
+  outline: none;
+  background-color: #ffe53b;
+  background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
 }
-/* slider start */
+
+.page-list {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+  gap: 10px;
+}
+
+/* ! ----------------------------------------------- slider start */
 .gallery {
   width: 100%;
 }
@@ -312,6 +427,9 @@ p {
   margin: 0 auto;
   max-width: 100%;
   position: relative;
+  /* background-color: black; */
+  border-radius: 50%;
+  /* box-shadow: black 10px 10px 10px 10px; */
 }
 
 .gallery-item {
@@ -368,18 +486,22 @@ p {
 .gallery-controls {
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   margin: 30px 0;
 }
 
 .gallery-controls button {
   background-color: #df8b46;
   border: 0;
-  border-radius: 1rem;
   cursor: pointer;
+  width: 20%;
+  height: 30px;
   font-size: 16px;
   margin: 0 20px;
   padding: 0 12px;
   text-transform: capitalize;
+  transform: skew(-21deg);
 }
 
 .gallery-controls button:focus {
@@ -390,46 +512,57 @@ p {
   position: relative;
 }
 
+.gallery-controls-previous:hover {
+  transition: 1s;
+  box-shadow: #883a19 0 5px 5px 5px;
+}
+
 .gallery-controls-previous::before {
-  border: solid #000;
+  color: white;
+  border: solid white;
   border-width: 0 2px 2px 0;
   content: "";
   display: inline-block;
-  height: 4px;
-  left: -10px;
+  height: 5px;
+  left: -20px;
   padding: 2px;
   position: absolute;
-  top: 0;
+  top: 4px;
   transform: rotate(135deg) translateY(-50%);
-  transition: left 0.15s ease-in-out;
+  transition: left 1s ease-in-out;
   width: 4px;
 }
 
 .gallery-controls-previous:hover::before {
-  left: -18px;
+  left: -40px;
 }
 
 .gallery-controls-next {
   position: relative;
 }
 
+.gallery-controls-next:hover {
+  box-shadow: #883a19 0 5px 5px 5px;
+  transition: 1s;
+}
+
 .gallery-controls-next::before {
-  border: solid #000;
+  border: solid white;
   border-width: 0 2px 2px 0;
   content: "";
   display: inline-block;
   height: 4px;
   padding: 2px;
   position: absolute;
-  right: -10px;
+  right: -20px;
   top: 50%;
   transform: rotate(-45deg) translateY(-50%);
-  transition: right 0.15s ease-in-out;
+  transition: right 1s ease-in-out;
   width: 4px;
 }
 
 .gallery-controls-next:hover::before {
-  right: -18px;
+  right: -40px;
 }
 
 .gallery-nav {

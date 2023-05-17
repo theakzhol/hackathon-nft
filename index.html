@@ -5,20 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NFT</title>
+    <!-- css  -->
     <link rel="stylesheet" href="./css/style.css" />
+    <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="/path/to/css/qc.slider.css" />
-
-    <link type="image/x-icon" href="./css/img/logo.png" rel="shortcut icon" />
-    <link type="Image/x-icon" href="./css/img/logo.png" rel="icon" />
-
+    <!-- <link rel="stylesheet" href="/path/to/css/qc.slider.css" /> -->
     <link
       href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+    <!-- carousel -->
+    <link type="image/x-icon" href="./css/img/logo.png" rel="shortcut icon" />
+    <link type="Image/x-icon" href="./css/img/logo.png" rel="icon" />
   </head>
   <body>
+    <!-- modal start -->
+    <div class="modal">
+      <div class="title">
+        <h2>Create new NFT</h2>
+      </div>
+      <div class="inputs">
+        <input type="text" placeholder="name" class="name" />
+        <input type="text" placeholder="description" class="descr" />
+        <input type="text" placeholder="price" class="price" />
+        <input type="text" placeholder="image" class="img" />
+      </div>
+      <div class="btns">
+        <button class="btn-create">Create</button>
+        <button class="btn-save">Save</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+    <!-- modal end -->
     <div class="container">
       <!-- navbar start -->
       <nav>
@@ -29,53 +48,30 @@
           <p class="logo">SAIGAK</p>
         </div>
         <div class="nav-right">
-          <input type="text" class="inp-search" placeholder="search" />
           <button class="btn-modalAdd">Add</button>
         </div>
       </nav>
       <!-- navbar end -->
-
-      <!-- modal start -->
-      <div class="modal">
-        <div class="title">
-          <h2>Create new NFT</h2>
-        </div>
-        <div class="inputs">
-          <input type="text" placeholder="name" class="name" />
-          <input type="text" placeholder="description" class="descr" />
-          <input type="text" placeholder="price" class="price" />
-          <input type="text" placeholder="image" class="img" />
-        </div>
-        <div class="btns">
-          <button class="btn-create">Create</button>
-          <button class="btn-save">Save</button>
-          <button class="btn-cancel">Cancel</button>
-        </div>
-      </div>
-      <!-- modal end -->
-
-      <!-- <button class="btn-modalAdd">CREATE</button> -->
     </div>
-
-    <!-- main content start -->
+    <!-- slider start -->
     <div class="container">
       <div class="gallery">
         <div class="gallery-container">
           <img
             class="gallery-item gallery-item-1"
             onclick="callfunc()"
-            src="https://lh3.googleusercontent.com/VwcMj6Fnt4BCFgU5mS9xMUu3HZEP8mvRnNkr1RvGK7-Lal4vlozf8ykh7Dg0YJNo0OwYV5bTEZEBrdtunfWVPLk97jsmt0tEMnhw"
+            src="https://d1mjtvp3d1g20r.cloudfront.net/2021/11/01111903/Shibaverse-2.gif"
             data-index="1"
           />
           <img
             class="gallery-item gallery-item-2"
             onclick="callfunc()"
-            src="https://media.nft.crypto.com/c905b10b-7b08-404d-92be-de26eabff37f/original.png?d=sm-cover"
+            src="https://global-uploads.webflow.com/6241bcd9e666c1514401461d/6452d2e38d28217e3f61fa4c_baked-on-creck-buy-nfts-crypto-art-solana-blockchain-sol-nft-collection-nft-tracking.gif"
             data-index="2"
           />
           <img
             class="gallery-item gallery-item-3"
-            src="https://nftevening.com/wp-content/uploads/2022/01/xeMFafsr_400x400.jpeg"
+            src="https://cdn.secretsphinx.io/ef53605257712fbddb516b8a0ca1a9e2.gif"
             data-index="3"
           />
           <img
@@ -85,18 +81,39 @@
           />
           <img
             class="gallery-item gallery-item-5"
-            src="https://public.nftstatic.com/static/nft/webp/nft-cex/S3/1671993090344_h5yrg5kzllxiq0g4buznfm9lp6gctdrc_400x400.webp"
+            src="https://riseangle.com/storage/events/s289YNEmH2452Rg3RYAMZGLhDwrSDt9wCV4DCkNN.gif"
             data-index="5"
           />
         </div>
         <div class="gallery-controls"></div>
       </div>
     </div>
-
+    <!-- slider end -->
+    <div class="block-filter">
+      <div class="filter">
+        <select name="filter" id="filter">
+          <option value="New">New</option>
+          <option value="New">Popular</option>
+          <option value="New">Expensive</option>
+        </select>
+      </div>
+      <div class="block-search">
+        <input type="text" class="inp-search" placeholder="search" />
+        <button class="btn-search">
+          <img src="./css/img/search.png" alt="error" class="img-search" />
+        </button>
+      </div>
+    </div>
     <!-- main content start -->
     <div class="main-content"></div>
     <!-- main content end -->
-    <div class="container">
+    <div class="page-controls">
+      <button class="btn-previous">Previous</button>
+      <ul class="page-list"></ul>
+      <button class="btn-next">Next</button>
+    </div>
+
+    <footer>
       <div class="footer">
         <div class="social">
           <p>Join the community</p>
@@ -118,17 +135,13 @@
         </div>
         <div class="info">© 2018 - 2023 Ozone Networks, Inc</div>
       </div>
-      <div class="history">
-        The world’s first and largest digital marketplace for crypto
-        collectibles and non-fungible tokens (NFTs). Buy, sell, and discover
-        exclusive digital items. Marketplace All NFTs Art Gaming Memberships
-        PFPs Photography My Accountls
-      </div>
-      <div class="info">© 2018 - 2023 Ozone Networks, Inc</div>
     </footer>
     <!-- footer end-->
-    <script src="/path/to/cdn/jquery.min.js"></script>
-    <script src="/path/to/qcslider.jquery.js"></script>
+
+    <!-- slider -->
+    <!-- <script src="/path/to/cdn/jquery.min.js"></script>
+    <script src="/path/to/qcslider.jquery.js"></script> -->
+    <!-- js -->
     <script src="./js/script.js"></script>
   </body>
 </html>

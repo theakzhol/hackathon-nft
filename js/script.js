@@ -17,22 +17,39 @@ let inpImg = document.querySelector(".img");
 let btnCreate = document.querySelector(".btn-create");
 let body = document.querySelector("body");
 let btnSave = document.querySelector(".btn-save");
+let inpSearch = document.querySelector(".inp-search");
+let btnSearch = document.querySelector(".btn-search");
+
+let searchVal = "";
+
+// ? pagination
+let currentPage = 1; // текущая страница
+let pageTotalCount = 1; // общее кол-во страниц
+let pageList = document.querySelector(".page-list");
+let prev = document.querySelector(".btn-previous");
+let next = document.querySelector(".btn-next");
 
 // ? add event to buttons
 
 btnModalAdd.addEventListener("click", () => {
   modal.style.display = "flex";
+  btnSave.style.display = "none";
+  btnCreate.style.display = "flex";
+  body.style.overflow = "hidden";
+  inpName.value = "";
+  inpDescr.value = "";
+  inpPrice.value = "";
+  inpImg.value = "";
 });
 
 btnCancel.addEventListener("click", () => {
   modal.style.display = "none";
+  body.style.overflow = "auto";
 });
 
-// ? ------------------------------------ ADD ----------------------
+// ? ----------------------------------------------------------- ADD ----------------------
 
-btnCreate.addEventListener("click", addNft);
-
-async function addNft() {
+btnCreate.addEventListener("click", async function () {
   // check for empty input
   if (
     !inpName.value.trim() ||
@@ -55,9 +72,7 @@ async function addNft() {
     method: "POST",
     headers: { "Content-Type": "application/json; charset=utf-8" },
     body: JSON.stringify(product),
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  });
 
   inpName.value = "";
   inpDescr.value = "";
@@ -65,24 +80,31 @@ async function addNft() {
   inpImg.value = "";
 
   modal.style.display = "none";
+  body.style.overflow = "auto";
 
   read();
-}
+});
 
-// ? --------------------------------- READ ----------------------
+// ? --------------------------------------------------------------- READ ----------------------
 
 async function read() {
-  let cards = await fetch(`${API}`);
+  let cards = await fetch(
+    `${API}?q=${searchVal}&_page=${currentPage}&_limit=6`
+  );
   let res = await cards.json();
 
   console.log(res);
 
+  drawPaginationButtons();
+
   render.innerHTML = "";
 
   res.forEach((element) => {
-    render.innerHTML += `<div class="cards">
+    render.insertAdjacentHTML(
+      "beforeend",
+      `<div class="cards">
     <div class="card-img">
-      <img src="${element.img}" alt="img error" class="card-img" style="width: 40%"/>
+      <img src="${element.img}" alt="img error" class="card-img" style="width: 50%"/>
     </div>
     <div class="card-title">
       <h2>${element.name}</h2>
@@ -92,12 +114,129 @@ async function read() {
     <div class="card-btn"> 
       <button onclick="updateNft(${element.id})" class="btn-edit">Edit</button>
       <button onclick="deleteNft(${element.id})" class="btn-delete">Delete</button>
-    </div>`;
+    </div>`
+    );
   });
 }
 
 read();
-// slider start
+
+// ? ------------------------------------- DELETE -----------------
+
+async function deleteNft(id) {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE",
+  });
+  read();
+}
+
+// ? ------------------------------- UPTADE ---------------------
+
+async function updateNft(id) {
+  editer_id = id;
+  let res = await fetch(`${API}/${id}`);
+  let cards = await res.json();
+
+  console.log(editer_id);
+  console.log(cards);
+
+  modal.style.display = "flex";
+  btnCreate.style.display = "none";
+  btnSave.style.display = "flex";
+
+  inpName.value = cards.name;
+  inpDescr.value = cards.descr;
+  inpPrice.value = cards.price;
+  inpImg.value = cards.img;
+
+  read(); // Добавлен вызов функции read для обновления списка элементов
+}
+
+btnSave.addEventListener("click", async function () {
+  let newProduct = {
+    name: inpName.value,
+    descr: inpDescr.value,
+    price: inpPrice.value,
+    img: inpImg.value,
+  };
+
+  console.log(newProduct);
+
+  fetch(`${API}/${editer_id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newProduct),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      read();
+    });
+
+  modal.style.display = "none";
+});
+
+// ? ------------------------ SEARCH
+
+inpSearch.addEventListener("input", () => {
+  searchVal = inpSearch.value;
+  read();
+});
+
+read();
+
+// ? --------------------    PAGINATION
+function drawPaginationButtons() {
+  fetch(`${API}`)
+    .then((res) => res.json())
+    .then((data) => {
+      pageTotalCount = Math.ceil(data.length / 6);
+
+      pageList.innerHTML = "";
+
+      for (let i = 1; i <= pageTotalCount; i++) {
+        // создаем кнопки с цифрами
+        if (currentPage == i) {
+          let page1 = document.createElement("li");
+          page1.innerHTML = `<li class="page-item active"><a class="page-link page-number" href="#"
+          style="color: white; text-decoration: none; font-size: 20px;">${i}</a></li>`;
+          pageList.append(page1);
+        } else {
+          let page2 = document.createElement("li");
+          page2.innerHTML = `<li class="page-item"><a class="page-link page-number" href="#"
+          style="color: white; text-decoration: none; font-size: 20px;">${i}</a></li>`;
+          pageList.append(page2);
+        }
+      }
+    });
+}
+
+// кнопка переключения на предыдущую страницу
+prev.addEventListener("click", () => {
+  if (currentPage <= 1) {
+    return;
+  }
+  currentPage--;
+  read();
+});
+
+// кнопка переключения на следующую страницу
+next.addEventListener("click", () => {
+  if (currentPage >= pageTotalCount) {
+    return;
+  }
+  currentPage++;
+  read();
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("page-number")) {
+    currentPage = e.target.innerText;
+    read();
+  }
+});
+
+// ! ================================================================  slider start ==================================================
 const galleryContainer = document.querySelector(".gallery-container");
 const galleryControlsContainer = document.querySelector(".gallery-controls");
 const galleryControls = ["previous", "next"];
@@ -183,17 +322,5 @@ const exampleCarousel = new Carousel(
 );
 
 exampleCarousel.setControls();
-// exampleCarousel.setNav();
 exampleCarousel.useControls();
-// slider end
-
-// ? ------------------------------------- DELETE -----------------
-
-async function deleteNft(id) {
-  await fetch(`${API}/${id}`, {
-    method: "DELETE",
-  });
-  read();
-}
-
-// ? ------------------------------- UPTADE ---------------------
+// ! =================================================================== slider end =====================================================
